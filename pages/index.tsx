@@ -1,24 +1,30 @@
-import type { NextPage, NextPageContext } from "next";
-import { useRouter } from "next/router";
+import type {NextPage} from "next";
+import {useRouter} from "next/router";
 
+type UrlData = {
+   id: number;
+   destinationUrl: string;
+}
+
+const urlList: UrlData[] = [
+   {id: 0, destinationUrl: "https://twitter.com/yuigishidev"}
+]
 const Home: NextPage = () => {
-  const router = useRouter();
-  const { id } = router.query;
+   const router = useRouter();
+   const {id} = router.query;
+   if (typeof id === "string") {
 
-  return <h1>id: {id}</h1>;
+      const urlId: number = parseInt(id);
+      const redirect = urlList.find((data: UrlData) => data.id === urlId);
+      if (redirect === undefined) {
+         return <h1>Cannot find redirect destination</h1>
+      }
+
+      router.replace(redirect.destinationUrl);
+      return <h1>Redirect to {redirect.destinationUrl}</h1>;
+   }
+
+   return <h1>Querry Error</h1>
+
 };
-
-Home.getInitialProps = async ({ res }: NextPageContext) => {
-  if (typeof window === undefined) {
-    if (res != undefined) {
-      res.writeHead(302, { Location: `https://example.com` });
-      res.end();
-    }
-    return {};
-  }
-
-  Router.push("https://twitter.com");
-  return {};
-};
-
 export default Home;
