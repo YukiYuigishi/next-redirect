@@ -7,7 +7,7 @@ type UrlData = {
 }
 
 const urlList: UrlData[] = [
-   {id: 0, destinationUrl: "https://twitter.com/yuigishidev"}
+   {id: 0, destinationUrl: "https://github.com/YukiYuigishi/MEISHI/blob/master/PCB/MEISHI2022/README.md"}
 ]
 const Home: NextPage = () => {
    const router = useRouter();
